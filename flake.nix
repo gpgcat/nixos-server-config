@@ -20,6 +20,8 @@
             ./system
             ./system/madoka
 
+            ./services
+
             (
               { ... }:
               {
