@@ -8,6 +8,7 @@ REMOTE="madeline@gpg.pet:/home/madeline/server"
 HOST="madeline@gpg.pet"
 
 echo "==> syncing $LOCAL to $REMOTE..."
+ssh "$HOST" "sudo rm -rf /home/madeline/server/.git"
 rsync -av --delete "$LOCAL/" "$REMOTE/"
 
 echo "==> running nixos-rebuild switch on remote..."
