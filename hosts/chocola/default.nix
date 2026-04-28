@@ -9,7 +9,7 @@
   
   networking = {
     useDHCP = false;
-    interfaces.enp0s18 = {
+    interfaces.ens18 = {
       ipv4.addresses = [{
         address = "157.173.16.143";
         prefixLength = 24;
