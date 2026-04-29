@@ -1,8 +1,10 @@
 keys:
-  - &chocola age1qjnnumajmqz7fp5cqa9xv4s65tymf2rg4ktmfqh5v7ug2h0acpjq2jvj8g
+  - &madeline ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILR5/w+gVjwspJzU5qMRDqU4fGyH8iatsfYLgfoBm3Ix
+  - &chocola age1zqhtn7pqm2cddgfgdn5dumup97hskyg4yere8fgqle39n998sfnq4cwpk0
 
 creation_rules:
-  - path_regex: secrets/.*\.yaml$
+  - path_regex: secrets/chocola\.yaml$
     key_groups:
       - age:
-          - *chocola
+        - *madeline
+        - *chocola
