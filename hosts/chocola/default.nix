@@ -3,6 +3,10 @@
   imports = [
     ./disko.nix
     ./hardware-configuration.nix
+
+    ./services/forgejo.nix
+    ./services/nginx.nix
+    ./services/acme.nix
   ];
   
   boot.loader.grub.enable = true;
