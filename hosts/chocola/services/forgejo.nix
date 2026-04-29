@@ -1,4 +1,11 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  version = "1.0.2";
+  theme = fetchTarball {
+    url = "https://github.com/catppuccin/gitea/releases/download/v${version}/catppuccin-gitea.tar.gz";
+    sha256 = "sha256:02zf207swfncfsd58hfdsg0r9gyfdclgg2hyf02z4l8b3hwwp4dd";
+  };
+in
 {
   services.forgejo = {
     enable = true;
@@ -12,8 +19,11 @@
       };
       service.DISABLE_REGISTRATION = true;
       ui = {
-        DEFAULT_THEME = "committed-violet";
-        THEMES = "committed-violet,terminal,forgejo-auto,forgejo-light,forgejo-dark";
+        DEFAULT_THEME = "catppuccin-mocha-pink";
+        THEMES = builtins.concatStringsSep "," (
+          map (name: lib.removePrefix "theme-" (lib.removeSuffix ".css" name))
+              (builtins.attrNames (builtins.readDir theme))
+        );
       };
     };
   };
@@ -22,17 +32,15 @@
     "d '${config.services.forgejo.customDir}/public' 0755 forgejo forgejo - -"
     "d '${config.services.forgejo.customDir}/public/assets' 0755 forgejo forgejo - -"
     "d '${config.services.forgejo.customDir}/public/assets/css' 0755 forgejo forgejo - -"
-    "C+ '${config.services.forgejo.customDir}/public/assets/css/theme-committed-violet.css' 0644 forgejo forgejo - ${../static/forgejo-committed-violet.css}" # https://sc.cryxtal.org/crystal/committed-violet
-    "C+ '${config.services.forgejo.customDir}/public/assets/css/theme-terminal.css' 0644 forgejo forgejo - ${../static/forgejo-terminal.css}" # https://codeberg.org/ivanhercaz/forgejo-terminal-theme
-  ];
+  ] ++ map (file:
+    "C+ '${config.services.forgejo.customDir}/public/assets/css/${file}' 0644 forgejo forgejo - ${theme}/${file}"
+  ) (builtins.attrNames (builtins.readDir theme));
 
-  services.nginx.virtualHosts = {
-    "git.gpg.pet" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://localhost:3000";
-      };
+  services.nginx.virtualHosts."git.gpg.pet" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://localhost:3000";
     };
   };
 }
