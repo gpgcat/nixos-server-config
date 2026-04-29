@@ -7,7 +7,7 @@
       dnsProvider = "porkbun";
       credentialFiles = {
         PORKBUN_API_KEY_FILE = config.sops.secrets.porkbun_api_key.path;
-        PORKBUN_SECRET_API_KEY_FILE = config.sops.secrets.porkbun_api_secret.path;
+        PORKBUN_SECRET_API_KEY_FILE = config.sops.secrets.porkbun_secret_key.path;
       };
     };
   };
