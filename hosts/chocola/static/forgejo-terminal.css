@@ -1,0 +1,266 @@
+/*
+  https://codeberg.org/ivanhercaz/forgejo-terminal-theme
+*/
+
+/*
+ * theme-terminal.css
+ * A minimal, terminal-inspired dark theme for Forgejo.
+ *
+ * Aesthetic: CRT phosphor green on deep black, monospace UI,
+ * flat surfaces, subtle borders, no gradients, no noise.
+ *
+ * Based on forgejo-dark, overrides CSS variables only.
+ * Drop into: <forgejo-data>/custom/public/assets/css/theme-terminal.css
+ * Then add "terminal" to [ui].THEMES in app.ini or via env var.
+ */
+
+@import url("./theme-forgejo-dark.css");
+
+:root {
+  color-scheme: dark;
+
+  /* ── Palette ─────────────────────────────────────────────── */
+  /*   bg-deep     #0a0a0a   almost black                      */
+  /*   bg-surface  #111111   cards, panels                     */
+  /*   bg-raised   #1a1a1a   hover states, secondary surfaces  */
+  /*   border      #222222   subtle dividers                   */
+  /*   text-dim    #555555   muted / disabled                  */
+  /*   text-mid    #888888   secondary text                    */
+  /*   text-main   #b0b0b0   primary text (soft white)         */
+  /*   accent      #33ff66   phosphor green                    */
+  /*   accent-dim  #1a7a33   accent at low opacity             */
+  /*   warn        #ffaa00   amber warnings                    */
+  /*   error       #ff4444   red errors                        */
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --fonts-proportional: "Berkeley Mono", "JetBrains Mono", "Fira Code",
+    "SF Mono", "Cascadia Code", "Source Code Pro", ui-monospace,
+    monospace !important;
+  --fonts-monospace: "Berkeley Mono", "JetBrains Mono", "Fira Code",
+    "SF Mono", "Cascadia Code", "Source Code Pro", ui-monospace,
+    monospace !important;
+
+  /* ── Primary / Accent ────────────────────────────────────── */
+  --color-primary: #33ff66 !important;
+  --color-primary-hover: #44ff77 !important;
+  --color-primary-active: #22dd55 !important;
+  --color-primary-alpha-10: rgba(51, 255, 102, 0.10) !important;
+  --color-primary-alpha-20: rgba(51, 255, 102, 0.20) !important;
+  --color-primary-alpha-40: rgba(51, 255, 102, 0.40) !important;
+  --color-accent: #33ff66 !important;
+
+  /* ── Backgrounds ─────────────────────────────────────────── */
+  --color-body: #0a0a0a !important;
+  --color-box-body: #111111 !important;
+  --color-box-body-highlight: #1a1a1a !important;
+  --color-secondary-alpha-20: rgba(255, 255, 255, 0.04) !important;
+  --color-secondary-alpha-40: rgba(255, 255, 255, 0.07) !important;
+  --color-secondary-alpha-60: rgba(255, 255, 255, 0.10) !important;
+  --color-secondary-alpha-80: rgba(255, 255, 255, 0.14) !important;
+
+  /* ── Borders ─────────────────────────────────────────────── */
+  --color-secondary: #222222 !important;
+  --color-border: #222222 !important;
+
+  /* ── Text ────────────────────────────────────────────────── */
+  --color-text: #b0b0b0 !important;
+  --color-text-light: #888888 !important;
+  --color-text-light-1: #888888 !important;
+  --color-text-light-2: #666666 !important;
+  --color-text-light-3: #555555 !important;
+
+  /* ── Navbar ──────────────────────────────────────────────── */
+  --color-nav-bg: #0a0a0a !important;
+  --color-nav-text: #b0b0b0 !important;
+  --color-nav-hover-bg: #1a1a1a !important;
+
+  /* ── Header / Footer ─────────────────────────────────────── */
+  --color-header: #0a0a0a !important;
+  --color-header-wrapper: #0a0a0a !important;
+  --color-footer: #0a0a0a !important;
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  --color-button-primary-bg: #33ff66 !important;
+  --color-button-primary-text: #0a0a0a !important;
+  --color-button-primary-hover-bg: #44ff77 !important;
+  --color-button-primary-hover-text: #0a0a0a !important;
+
+  /* ── Diffs ───────────────────────────────────────────────── */
+  --color-diff-removed-word-bg: rgba(255, 68, 68, 0.35) !important;
+  --color-diff-added-word-bg: rgba(51, 255, 102, 0.25) !important;
+  --color-diff-removed-row-bg: rgba(255, 68, 68, 0.08) !important;
+  --color-diff-added-row-bg: rgba(51, 255, 102, 0.08) !important;
+  --color-diff-removed-row-border: rgba(255, 68, 68, 0.25) !important;
+  --color-diff-added-row-border: rgba(51, 255, 102, 0.25) !important;
+
+  /* ── Shadows (kill them all) ─────────────────────────────── */
+  --shadow-xs: none !important;
+  --shadow-sm: none !important;
+  --shadow-md: none !important;
+  --shadow-lg: none !important;
+  --shadow-xl: none !important;
+
+  /* ── Labels / Tags ───────────────────────────────────────── */
+  --color-label-active-bg: rgba(51, 255, 102, 0.12) !important;
+  --color-label-active-text: #33ff66 !important;
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+  --color-input-background: #0a0a0a !important;
+  --color-input-border: #222222 !important;
+  --color-input-text: #b0b0b0 !important;
+
+  /* ── Code blocks ─────────────────────────────────────────── */
+  --color-code-bg: #0e0e0e !important;
+  --color-code-sidebar-bg: #0a0a0a !important;
+}
+
+/* ── Global tweaks ───────────────────────────────────────────── */
+
+/* Thinner, sharper borders everywhere */
+.ui.segment,
+.ui.attached.segment,
+.repository .repo-header,
+.repository .repo-body {
+  border-color: #222222 !important;
+  border-radius: 2px !important;
+}
+
+/* Remove box shadows globally */
+*,
+.ui.segment,
+.ui.card,
+.ui.menu,
+.ui.dropdown .menu {
+  box-shadow: none !important;
+}
+
+/* Flat, minimal cards */
+.ui.card,
+.ui.cards > .card {
+  border: 1px solid #222222 !important;
+  border-radius: 2px !important;
+  background: #111111 !important;
+}
+
+/* Repo list: cleaner */
+.flex-item {
+  border-bottom: 1px solid #1a1a1a !important;
+}
+
+/* Buttons: flat, no rounding */
+.ui.button,
+.ui.basic.button {
+  border-radius: 2px !important;
+  text-transform: none !important;
+}
+
+/* Primary button: green on black, inverted on hover */
+.ui.primary.button {
+  background: #33ff66 !important;
+  color: #0a0a0a !important;
+  border: 1px solid #33ff66 !important;
+  font-weight: 600 !important;
+}
+
+.ui.primary.button:hover {
+  background: #0a0a0a !important;
+  color: #33ff66 !important;
+  border: 1px solid #33ff66 !important;
+}
+
+/* Secondary/basic buttons */
+.ui.basic.button {
+  background: transparent !important;
+  color: #888888 !important;
+  border: 1px solid #333333 !important;
+}
+
+.ui.basic.button:hover {
+  color: #33ff66 !important;
+  border-color: #33ff66 !important;
+}
+
+/* Navbar: flat and minimal */
+.ui.secondary.menu .item,
+.ui.tabular.menu .item {
+  border-radius: 0 !important;
+}
+
+/* Active tab: bottom accent line instead of background change */
+.ui.tabular.menu .active.item {
+  border-bottom: 2px solid #33ff66 !important;
+  background: transparent !important;
+  color: #33ff66 !important;
+}
+
+/* Links: green, no underline until hover */
+a {
+  color: #33ff66 !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: underline !important;
+  color: #44ff77 !important;
+}
+
+/* Dimmer text links (breadcrumbs, metadata) */
+.text.grey a,
+.meta a,
+.commit-header a {
+  color: #888888 !important;
+}
+
+.text.grey a:hover,
+.meta a:hover,
+.commit-header a:hover {
+  color: #33ff66 !important;
+}
+
+/* Code view: tighter line height */
+.code-view .lines-code,
+.code-view .lines-num {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+/* Scrollbars: thin and dark */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #33ff66;
+}
+
+/* Dropdown menus: flat */
+.ui.dropdown .menu {
+  background: #111111 !important;
+  border: 1px solid #222222 !important;
+  border-radius: 2px !important;
+}
+
+.ui.dropdown .menu > .item {
+  color: #b0b0b0 !important;
+}
+
+.ui.dropdown .menu > .item:hover {
+  background: #1a1a1a !important;
+  color: #33ff66 !important;
+}
+
+/* Selection: green highlight */
+::selection {
+  background: rgba(51, 255, 102, 0.25);
+  color: #e0e0e0;
+}
