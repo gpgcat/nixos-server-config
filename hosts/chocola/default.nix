@@ -6,6 +6,15 @@
   ];
   
   boot.loader.grub.enable = true;
+
+  sops = {
+    defaultSopsFile = ../../secrets/chocola.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = {
+      porkbun_api_key = {};
+      porkbun_secret_key = {};
+    };
+  };
   
   networking = {
     useDHCP = false;
