@@ -13,6 +13,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -21,6 +26,7 @@
       nixpkgs,
       deploy-rs,
       disko,
+      sops-nix,
       ...
     }@inputs:
     {
@@ -50,6 +56,7 @@
           chocola = mkNixosSystem "chocola" "gpg.pet" [
             ./hosts/chocola
 
+            sops-nix.nixosModules.sops
             disko.nixosModules.disko
           ];
         };

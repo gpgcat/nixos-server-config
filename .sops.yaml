@@ -1,0 +1,8 @@
+keys:
+  - &chocola age1qjnnumajmqz7fp5cqa9xv4s65tymf2rg4ktmfqh5v7ug2h0acpjq2jvj8g
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *madoka
