@@ -25,4 +25,14 @@
     "C+ '${config.services.forgejo.customDir}/public/assets/css/theme-committed-violet.css' 0644 forgejo forgejo - ${../static/forgejo-committed-violet.css}" # https://sc.cryxtal.org/crystal/committed-violet
     "C+ '${config.services.forgejo.customDir}/public/assets/css/theme-terminal.css' 0644 forgejo forgejo - ${../static/forgejo-terminal.css}" # https://codeberg.org/ivanhercaz/forgejo-terminal-theme
   ];
+
+  services.nginx.virtualHosts = {
+    "git.gpg.pet" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:3000";
+      };
+    };
+  };
 }
