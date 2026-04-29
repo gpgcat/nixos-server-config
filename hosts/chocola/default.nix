@@ -7,6 +7,7 @@
     ./services/forgejo.nix
     ./services/nginx.nix
     ./services/acme.nix
+    ./services/vaultwarden.nix
   ];
   
   boot.loader.grub.enable = true;
@@ -18,6 +19,11 @@
       porkbun_api_key = {};
       porkbun_secret_key = {};
     };
+  };
+
+  networking.firewall = {
+    allowedTCPPorts = [ 22 80 443 1234 ];
+    allowedUDPPorts = [ 53 ];
   };
   
   networking = {
