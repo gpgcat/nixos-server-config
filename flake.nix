@@ -18,6 +18,12 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # projects
+    gpg-pet = {
+      url = "git+ssh://forgejo@git.gpg.pet/gpgcat/gpg.pet.git";
+      flake = true;
+    };
   };
 
   outputs =

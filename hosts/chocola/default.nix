@@ -8,6 +8,8 @@
     ./services/nginx.nix
     ./services/acme.nix
     ./services/vaultwarden.nix
+
+    ./sites/gpg.pet.nix
   ];
   
   boot.loader.grub.enable = true;
